@@ -1,0 +1,34 @@
+export const metricStatus = {
+	INITIALIZED: 'INITIALIZED',
+	PROCESSING: 'PROCESSING',
+	ERROR: 'ERROR',
+	FAILURE: 'FAILURE',
+	CONCERN: 'CONCERN',
+	SUCCESS: 'SUCCESS'
+}
+
+export const defaultMetricValues = {
+	status: 'INITIALIZED',
+	message: null,
+	metric1: null,
+	metric2: null,
+	dataPoints: []
+}
+
+export const validatorState = {
+	AWAITING_CREATION: 'AWAITING_CREATION',
+	IS_CREATING: 'IS_CREATING',
+	AWAITING_FUNDING: 'AWAITING_FUNDING',
+	IS_FUNDING: 'IS_FUNDING',
+	AWAITING_ACTIVATION: 'AWAITING_ACTIVATION',
+	VALIDATING: 'VALIDATING',
+	CREATING_ERROR: 'CREATING_ERROR',
+	FUNDING_ERROR: 'FUNDING_ERROR'
+}
+
+export const connectionStatus = {
+	DISCONNECTED: 'DISCONNECTED',
+	CONNECTING: 'CONNECTING',
+	CONNECTED: 'CONNECTED',
+	ERROR: 'ERROR',
+}

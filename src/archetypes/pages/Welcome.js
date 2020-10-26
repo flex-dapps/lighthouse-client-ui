@@ -1,0 +1,109 @@
+import React, { Fragment } from 'react'
+import styled from 'styled-components'
+import { Centered } from '@layouts'
+import { Button, Tidbit, Status } from '@components'
+import { AppStore, HostStore } from '@store'
+import { ReactComponent as IconLogo } from '@assets/lighthouse_logo.svg';
+import { ReactComponent as IconArrowRight } from '@assets/arrow_right.svg';
+import BackgroundGraphic from '@assets/graphic_lavalamp.png';
+
+export default styled(
+	({className, ...rest}) => {
+		const { history } = AppStore()
+		const { state } = HostStore()
+
+		return <Centered 
+			className={className}
+			background={BackgroundGraphic}
+			{...rest}
+			>
+			
+			<div className="-top">
+				<IconLogo className='-logo'/>
+
+				<h1 className='-title'>
+					Hello {state?.name},<br/>
+					Welcome to <strong>LIGHTHOUSE</strong><br/> 
+					the Ethereum Validator Client
+				</h1>
+
+				<Button to={'/onboarding/health'}>
+					Create Validator
+					<IconArrowRight/>
+				</Button>
+
+				<Button 
+					disabled={'soon'}
+					>
+					Import Account
+					<IconArrowRight/>
+				</Button>
+			</div>
+
+			<div className="-bottom">
+				
+				<Tidbit 
+					title='Skip setup process'
+					info='Some info goes here'
+					subtitle='Continue dashboard with limited functionality -'
+					onClick={() => history.push('/')}
+				/>
+
+				<Tidbit 
+					className='-network'
+					title={`${state?.address}:${state?.port_bn}`}
+					subtitle={
+						<Fragment>
+							<Status.Dot status={'success'} small/> 
+							Beacon Node: 
+							<strong>{state?.bn?.config?.spec?.CONFIG_NAME}</strong>
+						</Fragment>
+					}
+					right
+				/>
+			</div>	
+
+		</Centered>
+	})`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	
+	background: var(--color-dark);
+	color: var(--color-light);
+
+	.children{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+	
+	.-logo{
+		font-size: 6rem;
+		margin: 8vw 0 6vw;
+	}
+
+	.-title{
+		font-size: var(--font-size-xxlarge);
+		line-height: 1.2em;
+		margin-bottom: 1.4em;
+		strong{
+			font-weight: 900;
+		}
+	}
+	
+	.-bottom{
+		padding-top: 4vw;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		
+		.-network {
+			text-align: right;
+			.tidbit-subtitle{
+				text-transform: capitalize;
+			}
+		}
+	}
+	`
