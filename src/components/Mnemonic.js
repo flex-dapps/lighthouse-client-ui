@@ -245,16 +245,13 @@ const Confirm = styled(
 				if(!length){
 					onNoPhrase()
 				}else{
-					const words =
-						phraseSplit.map((word, i) => {
-							return {
-								index: i+1,
-								word: word,
-								correct: false
-							}
-						})
-
-					setWords(words)
+					setWords(phraseSplit.map((word, i) => {
+						return {
+							index: i+1,
+							word: word,
+							correct: false
+						}
+					}))
 
 					onChange({
 						confirmed: 0,
