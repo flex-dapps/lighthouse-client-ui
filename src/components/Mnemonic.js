@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components'
-import { shuffle } from 'lodash'
 import { Button } from '@components'
 import { ReactComponent as IconRefresh } from '@assets/refresh.svg';
 import { ReactComponent as IconCheck } from '@assets/check.svg';
@@ -246,17 +245,13 @@ const Confirm = styled(
 				if(!length){
 					onNoPhrase()
 				}else{
-					const shuffled = shuffle(
-						phraseSplit.map((word, i) => {
-							return {
-								index: i+1,
-								word: word,
-								correct: false
-							}
-						})
-					)
-
-					setWords(shuffled)
+					setWords(phraseSplit.map((word, i) => {
+						return {
+							index: i+1,
+							word: word,
+							correct: false
+						}
+					}))
 
 					onChange({
 						confirmed: 0,
