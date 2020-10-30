@@ -45,6 +45,7 @@ const initialState = {
 	lighthouse: {
 		bn: {
 			api: BeaconNode,
+			spec: {},
 			status: connectionStatus.DISCONNECTED,
 		},
 		vc: {
@@ -232,6 +233,7 @@ export default () => Store('hoststore', {
 		bn.on('eth.health', data => set('metrics.eth', data))
 		bn.on('beacon.health', data => set('metrics.beacon', data))
 		bn.on('status', status => set('lighthouse.bn.status', status))
+		bn.on('connected', spec => set('lighthouse.bn.spec', spec))
 		
 		
 		// configure validator client api

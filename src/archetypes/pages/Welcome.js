@@ -56,7 +56,7 @@ export default styled(
 						<Fragment>
 							<Status.Dot status={'success'} small/> 
 							Beacon Node: 
-							<strong>{state?.bn?.config?.spec?.CONFIG_NAME}</strong>
+							<strong>{state?.lighthouse?.bn?.spec?.CONFIG_NAME}</strong>
 						</Fragment>
 					}
 					right
