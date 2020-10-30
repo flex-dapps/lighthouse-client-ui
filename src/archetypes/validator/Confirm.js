@@ -110,14 +110,27 @@ export default styled(
 		const { state, set, trigger } = ValidatorStore()
 		const [ confirmed, setConfirmed ] = useState(false)
 
-		// reset all to false on load
+		// check all confirmations on init & redirect if necessary
 		useEffect(() => {
-			set('confirmed.syncing', false)
-			set('confirmed.validators', false)
-			set('confirmed.keys', false)
+			if(
+				state?.confirmed?.syncing === true ||
+				state?.confirmed?.validators === true ||
+				state?.confirmed?.keys === true 
+			)
+			// already confirmed - forward to funding screen
+			{
+				history.push('/onboarding/funding')
+			}
+			//  not confirmed? make sure user has to reconfirm all
+			else{
+				set('confirmed.syncing', false)
+				set('confirmed.validators', false)
+				set('confirmed.keys', false)
+			}
+			
 		}, []) // eslint-disable-line
 
-		// 
+		// check user has confirmed all, and set button state
 		useEffect(() => {
 			setConfirmed(
 				state?.confirmed?.syncing === true &&
