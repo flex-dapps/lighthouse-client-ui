@@ -97,7 +97,7 @@ const triggers = {
 				// timeout here for aesthetic purposed only
 				// sometimes everything loads too fast and the UI feels rushed
 				setTimeout(() => {
-					loader.error(`App initialized`)
+					loader.success(`App initialized`)
 				}, 2000)
 			}
 		})
