@@ -94,8 +94,10 @@ const triggers = {
 					}
 				})
 
+				// timeout here for aesthetic purposed only
+				// sometimes everything loads too fast and the UI feels rushed
 				setTimeout(() => {
-					loader.success(`App initialized`)
+					loader.error(`App initialized`)
 				}, 2000)
 			}
 		})
@@ -106,17 +108,18 @@ const triggers = {
 		const id = uuidv4()
 		loaders.push(id)
 		set('loading', true)
-		trigger('log', { message: message})
+		trigger('log', { message: message })
 		ready({
 			success: async message => {
-				trigger('log', { message: message })
+				trigger('log', { message: message, type: 'SUCCESS' })
 				pull(loaders, id)
 				if(loaders.length <= 0) {
 					set('loading', false)
 				}
 			},
 			error: async message => {
-				trigger('log', { message: message, type: 'ERROR'})
+				trigger('log', { message: message, type: 'ERROR' })
+				// throw error?
 			},
 		})
 	},

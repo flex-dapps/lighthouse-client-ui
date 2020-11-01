@@ -3,6 +3,7 @@ import Store from '@libs/store'
 
 const LogTypes = {
 	DEFAULT: 'DEFAULT',
+	PROCESSING: 'PROCESSING',
 	SUCCESS: 'SUCCESS',
 	WARNING: 'WARNING',
 	ERROR: 'ERROR',
@@ -12,7 +13,7 @@ const LogTypes = {
 const maxLogLength = 20
 
 const setters = {
-	item: ({state}, {message, type=LogTypes.DEFAULT}) => {
+	item: ({state}, {message, type=LogTypes.PROCESSING}) => {
 		
 		if(message){
 			state.items.unshift({
@@ -25,9 +26,13 @@ const setters = {
 	},
 }
 
-export default () => Store('logstore', {
+const logstore = () => Store('logstore', {
 	initialState: {
 		items: []
 	},
 	setters: setters
 })
+
+logstore.types = LogTypes
+
+export default logstore

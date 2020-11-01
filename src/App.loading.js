@@ -19,26 +19,32 @@ export default styled(
 			{...rest}
 			>
 			
-			<div className="-top">
-				<h1>Initializing...</h1>
-				<AppLog/>
+			<div>
+				<h1 className='-title'>Initializing...</h1>
+				<AppLog count={20}/>
 			</div>
 
-			<div className="-bottom">
+			<div>
 				<Tidbit 
 					title='Ethereum Lighthouse'
 					subtitle='Validator Client —'
 				/>
 
 				<Tidbit 
-					title='Developed & Secured By:'
-					subtitle='Sigma Prime —'
+					title='Developed & secured by:'
+					subtitle='Sigma Prime'
 					className={'-muted'}
 				/>
 
 				<Tidbit 
-					title='Built On:'
-					subtitle='Rust Programming Language —'
+					title='Built on:'
+					subtitle='Rust Programming Language'
+					className={'-muted'}
+				/>
+
+				<Tidbit 
+					title='Asembled by:'
+					subtitle='Flex Dapps'
 					className={'-muted'}
 				/>
 			</div>
@@ -63,27 +69,38 @@ export default styled(
 			flex-direction: column;
 			justify-content: space-between;
 			height: 100%;
-		}
-		
-		.-bottom{
-			display: flex;
-			align-items: center;
 
-			.tidbit{
-				min-width: 25rem;
-				.-title{
-					font-weight: 400;
-					font-size: var(--font-size-normal);
-				}
-				.-subtitle{
-					font-weight: 600;
-					font-size: var(--font-size-normal);
-					opacity: 1 
-				}
+			>div:nth-child(1){
+				margin-top: 3vw
+			}
 
-				&.-muted{
-					opacity: 0.5
+			>div:nth-child(2){
+				display: flex;
+				align-items: center;
+
+				.tidbit{
+					min-width: 22rem;
+
+					.tidbit-title,
+					.tidbit-subtitle{
+						opacity: 1;
+						font-size: var(--font-size-small);
+						opacity: 1 
+					}
+					
+					.tidbit-subtitle{
+						font-weight: 600;
+					}
+
+					&.-muted{
+						opacity: 0.5
+					}
 				}
+			}
+
+			.-title{
+				font-size: var(--font-size-medium);
+				margin-bottom: 0;
 			}
 		}
 

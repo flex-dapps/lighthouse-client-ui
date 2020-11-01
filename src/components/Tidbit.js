@@ -54,7 +54,7 @@ export default styled(
 	>.tidbit-title{
 		${({strong}) => `
 			font-weight: ${!!strong ? 'bold' : 'normal'};
-			text-transform: ${!!strong ? 'uppercase' : 'normal'};
+			text-transform: ${!!strong ? 'uppercase' : 'initial'};
 		`}
 
 		${({large}) => `font-size: ${!!large ? 'var(--font-size-medium)' : 'var(--font-size-normal)'};`}
