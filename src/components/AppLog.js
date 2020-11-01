@@ -20,7 +20,6 @@ const LogItem = styled(
 			data-type={type}
 			className={`applog-item ${className}`}
 			>
-			{console.log(type)}
 			<span className="timestamp">{iconTypes[type]}{moment.unix(timestamp).format('HH:mm:ss')}: </span>
 			<span className="message">{message}</span>
 		</span>

@@ -154,6 +154,7 @@ const Confirm = props => {
 					}}
 					onNoPhrase={() => history.push('/onboarding/mnemonic')}
 					onChange={setStats}
+					confirmationType={Mnemonic.confirmationTypes.TWOROWS}
 				/>
 			</Card.Column>
 
