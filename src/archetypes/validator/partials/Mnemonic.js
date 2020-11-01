@@ -7,7 +7,7 @@ const Minimal = styled(
 	props => {
 		const { trigger } = ValidatorStore()
 		return <Widget.Minimal
-			title='Menmonic'
+			title='Mnemonic'
 			subtitle={`Confirmed`}
 			info={<Button inline onClick={() => trigger('mnemonic.download')}>Download</Button> }
 			{...props}

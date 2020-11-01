@@ -20,7 +20,7 @@ const routes = [
 		match: ['/onboarding/validators']
 	},
 	{
-		title: '3. Generate Menmonic',
+		title: '3. Generate Mnemonic',
 		match: [
 			'/onboarding/mnemonic',
 			'/onboarding/mnemonic/confirm'

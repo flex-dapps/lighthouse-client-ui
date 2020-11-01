@@ -6,7 +6,7 @@ import { ReactComponent as IconValidators } from '@assets/validators.svg';
 export default ({className}) => <Panel>
 	<Panel.Graphic icon={<IconValidators/>} />
 	<Panel.Content
-		title='Menmonic Disclosure'
+		title='Mnemonic Disclosure'
 		footer={
 			<Button compact>
 				Learn More <IconArrowRight/>

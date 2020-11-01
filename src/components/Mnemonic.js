@@ -225,7 +225,7 @@ const Generate = styled(
 const Confirm = styled(
 	({
 		phrase,
-		confirmationType=confirmationTypes.ALL,
+		confirmationType=process.env.REACT_APP_MNEMONIC_CONFIRMATION_TYPE||confirmationTypes.ALL,
 		onConfirm=()=>{}, 
 		onChange=()=>{}, 
 		onError=()=>{},

@@ -71,7 +71,7 @@ const Create = props => {
 						Phrase &mdash;
 					</Fragment>
 				}
-				title='Secure Menmonic Phrase Key'
+				title='Secure Mnemonic Phrase Key'
 				subtitle='Save offline! Do not store on cloud. You will be required to confirm in next step'
 				width={72}
 				>
@@ -142,7 +142,7 @@ const Confirm = props => {
 						Phrase &mdash;
 					</Fragment>
 				}
-				title='Confirm Menmonic Phrase Key'
+				title='Confirm Mnemonic Phrase Key'
 				subtitle='Enter the corresponding words to the numbers presented in the previous step'
 				width={72}
 				>
@@ -154,7 +154,6 @@ const Confirm = props => {
 					}}
 					onNoPhrase={() => history.push('/onboarding/mnemonic')}
 					onChange={setStats}
-					confirmationType={Mnemonic.confirmationTypes.TWOROWS}
 				/>
 			</Card.Column>
 
@@ -193,8 +192,16 @@ const Confirm = props => {
 				</Button>
 			}
 
-			{/* TODO: REMOVE FOR BUILD - TESTING ONLY */}
-			<Button inline compact to='/onboarding/confirm'>[SKIP]</Button>
+			{
+				process.env.REACT_APP_ALLOW_MNEMONIC_CONFIRMATION_SKIP === 'true' && 
+					<Button 
+						inline 
+						to='/onboarding/confirm'
+						>
+						Skip 
+						<IconArrowRight/>
+					</Button>
+			}
 		</Section.Footer>
 	</Section>
 }
