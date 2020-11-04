@@ -182,6 +182,15 @@ Card.Column = styled(
 			}
 		}
 
+		.card-title{
+			.tidbit-title{
+				font-size: var(--font-size-large);
+			}
+			.tidbit-subtitle{
+				font-size: var(--font-size-normal);
+			}
+		}
+
 		.card-content{
 			margin: 0;
 			font-size: var(--font-size-normal, 12px)
@@ -214,7 +223,7 @@ Card.Column.Divider = styled(
 	`
 		margin: 2rem 0;
 		${({compact}) => !!compact && `margin: 1.5rem 0;`}
-		${({comfortable}) => !!comfortable && `margin: 3rem 0;`}
+		${({comfortable}) => !!comfortable && `margin: 2.6rem 0;`}
 	`
 
 Card.Controls = styled(

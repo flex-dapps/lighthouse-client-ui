@@ -211,31 +211,40 @@ Widget.Minimal = styled(
 	align-items: stretch;
 
 	>*{
-		padding: 0.6rem 1rem;
+		padding: 0.8rem 1rem;
 	}
 
 	>.-left{
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		width: 70%;
 		
 		>.-top{
-			font-size: var(--font-size-xsmall);
+			font-size: var(--font-size-xxsmall);
 			text-transform: uppercase;
-			font-weight: 500;
-			margin-bottom: 1em;
+			font-weight: 600;
+			margin-bottom: 0.5em;
 		}
 
 		>.-bottom{
 			.-subtitle{
 				display: block;
-				font-size: var(--font-size-small);
-				color: var(--color-grey-400)
+				font-size: var(--font-size-xsmall);
+				color: var(--color-grey-400);
+				twhite-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				line-height: 1.2em;
 			}
 			.-info{
 				display: block;
-				font-size: var(--font-size-xsmall);
-				color: var(--color-grey-400)
+				font-size: var(--font-size-xxsmall);
+				color: var(--color-grey-400);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				line-height: 1.2em;
 			}
 		}
 	}
@@ -244,6 +253,7 @@ Widget.Minimal = styled(
 		display: flex;
 		align-items: center;
 		align-self: center;
+		width: 30%;
 	}
 
 	>.pill{

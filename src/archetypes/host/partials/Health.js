@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
-import { Status, Card, Widget, DisclosureButton } from '@components'
+import { Status, Card, Widget, DisclosureButton, LazyBoi } from '@components'
 import { Host } from '@archetypes'
 
 const Health = () => {}
@@ -28,7 +28,7 @@ const Minimal = styled(
 		return <Widget.Minimal
 			title='Health Check'
 			subtitle={`Uptime: ${data?.metric1||'-'}`}
-			info={data?.message}
+			info={<LazyBoi value={data?.message}/>}
 			extra={<Status.Dot status={data?.status} large className='health-status'/>}
 			{...props}
 		/>

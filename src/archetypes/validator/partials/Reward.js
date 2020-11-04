@@ -48,14 +48,14 @@ const Full = styled(
 	`
 		.-horizon-select{
 			.-title{
-				font-size: var(--font-size-small);
+				font-size: var(--font-size-xsmall);
 				margin-bottom: 0;
 
 			}
 			.-container{
 				border-bottom: none;
 				select{
-					padding: 0.5em 0 0 0;
+					padding: 0.4em 0 0 0;
 				}
 			}
 

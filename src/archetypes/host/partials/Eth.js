@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Widget, Status, Progress } from '@components'
+import { Widget, Status, Progress, LazyBoi } from '@components'
 import { format } from '@util/helpers'
 import { ReactComponent as EthLogo } from '@assets/logo_eth.svg';
 import { Host } from '@archetypes' 
@@ -74,7 +74,7 @@ const Minimal = props => {
 		//disabled={fields.status === 'ERROR' && fields.message}
 		title='ETH 1.0 Chain'
 		subtitle='Syncing -'
-		info={`${format.commas(fields?.head_block_number)}/${format.commas(fields?.latest_cached_block_number)}`}
+		info={<LazyBoi value={fields?.head_block_number && format.commas(fields?.head_block_number)} suffix={`/ ${format.commas(fields?.latest_cached_block_number)}`}/>}
 		extra={
 			<StyledProgress 
 				total={fields?.head_block_number} 

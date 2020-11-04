@@ -29,7 +29,7 @@ const Minimal = styled(
 		return <Widget.Minimal
 			title='Validators'
 			subtitle={`Required: ${state.network?.eth_per_validator*Object.keys(state.validators).length} ETH`}
-			info={`+${state.reward?.eth} ETH ${state.horizon} `}
+			info={`+${(state.reward?.eth||0).toFixed(3)} ETH ${state.horizon} `}
 			{...props}
 			extra={
 				<span 

@@ -46,11 +46,12 @@ const Button = styled(
 	align-items: center;
 	justify-content: center;
 	transition: all 0.15s ease-in-out;
-	padding: 0.6em;
+	padding: 0.6em; 
 	border: 1px solid currentColor;
 	color: currentColor;
 	background: transparent;
 	font-size: var(--font-size-medium, 16px);
+	letter-spacing: 0.034em;
 
 	${({compact}) => !!compact && `font-size: var(--font-size-normal, 14px);`}
 	${({large}) => !!large && `font-size: var(--font-size-large, 20px);`}

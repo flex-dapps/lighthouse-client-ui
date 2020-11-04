@@ -36,6 +36,7 @@ const Background = styled(
 			return typeof src === 'string' && `
 				background-image: url(${src});
 				background-size: cover;
+				background-position: 80% 50%;
 			`
 		}}
 	`

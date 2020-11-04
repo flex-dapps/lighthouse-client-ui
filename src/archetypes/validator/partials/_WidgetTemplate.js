@@ -32,7 +32,7 @@ const Template = styled(
 	line-height: 1.6rem;
 
 	.-content{
-		margin: 2.4rem 0 3rem;
+		margin: 2.1rem 0 2.6rem;
 	}
 	`
 
@@ -79,7 +79,11 @@ Template.Content = styled(
 
 			>*{
 				display: block;
-				line-height: 1em;
+				line-height: 1.3em;
+			}
+
+			.-icon{
+				//margin-bottom: 0.3rem;
 			}
 		}
 
@@ -96,7 +100,7 @@ Template.Content = styled(
 
 			.-info{
 				display: block;
-				font-size: var(--font-size-normal);
+				font-size: var(--font-size-xsmall);
 				color: var(--color-grey-500);
 				line-height: 1em;
 			}

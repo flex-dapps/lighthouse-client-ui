@@ -65,22 +65,21 @@ const ProgressItem =  styled(
 		}
 
 		>.-left{
-			padding: 1.2rem 0.7rem 1.4rem 1.6rem;
+			padding: 0.8rem 0.7rem 1.2rem 1.6rem;
 		}
 
 		>.-right{
-			padding: 1.2rem 2.4rem 1.4rem 0.7rem;
+			padding: 0.8rem 2.4rem 1.2rem 0.7rem;
 			
 			.-title,
 			.-status{
-				font-size: var(--font-size-small);
+				font-size: var(--font-size-xsmall);
 				text-transform: uppercase;
-				font-weight: 400;
-				line-height: 1.2em;
+				font-weight: 600;
+				line-height: 1.3em;
 			}
 
 			.-status{
-				font-weight: 600;
 				opacity: 0.2;
 			}
 		}
@@ -113,7 +112,7 @@ const ProgressLine =  styled(
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		height: 5px;
+		height: 4px;
 		background: var(--color-grey-200);
 
 		.-progress{

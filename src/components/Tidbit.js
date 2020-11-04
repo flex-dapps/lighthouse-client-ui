@@ -52,12 +52,15 @@ export default styled(
 	}
 
 	>.tidbit-title{
-		${({strong}) => `
+		${({large}) => `font-size: ${!!large ? 'var(--font-size-medium)' : 'var(--font-size-normal)'};`}
+
+		${({strong, large}) => `
 			font-weight: ${!!strong ? 'bold' : 'normal'};
 			text-transform: ${!!strong ? 'uppercase' : 'initial'};
+			font-size: ${!!large ? 'var(--font-size-normal)' : 'var(--font-size-small)'};
 		`}
 
-		${({large}) => `font-size: ${!!large ? 'var(--font-size-medium)' : 'var(--font-size-normal)'};`}
+		
 		
 		.tidbit-info{
 			margin-left: 0.4em
@@ -68,6 +71,12 @@ export default styled(
 		margin-top: 0.2em;
 		opacity: 0.5;
 		${({large}) => `font-size: ${!!large ? 'calc(var(--font-size-medium) * 0.9)' : 'calc(var(--font-size-normal) * 0.9)'};`}
+		${({strong, large}) => `
+			font-weight: ${!!strong ? 'bold' : 'normal'};
+			text-transform: ${!!strong ? 'uppercase' : 'initial'};
+			font-size: ${!!large ? 'calc(var(--font-size-normal) * 0.9)' : 'calc(var(--font-size-small) * 0.8)'};
+		`}
+
 	}
 
 	&[data-is-link="true"]{

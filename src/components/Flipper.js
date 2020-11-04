@@ -94,7 +94,7 @@ Flipper.Item = styled(
 			</div>
 		</article>
 	})`
-	width: 93%;
+	width: 85%;
 	display:block;
 	transition: all 0.5s;
 
@@ -103,11 +103,19 @@ Flipper.Item = styled(
 		margin-bottom: 1em;
 		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.09), 0px 10px 20px rgba(0, 0, 0, 0.12);
 		transition: all 0.5s;
+
+		*{
+			transition: all 0.5s;
+		}
+
+		.panel{
+			min-height: 45rem;
+		}
 	}
 
 	.nav{
 		margin-top: 2rem;
-		position: absolute;
+		//position: absolute;
 		top: 100%;
 	}
 
@@ -126,28 +134,29 @@ Flipper.Item = styled(
 		transform: scale(0.8);
 		pointer-events: none;
 
-		.inner{
-			box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.0045), 0px 10px 20px rgba(0, 0, 0, 0.06);
-			*{
-				opacity: 0.6;
-				transition: all 0.5s;
-			}
-		}
-
 		.nav{
 			opacity: 0;
 		}
 	}
 
 	&[data-state='»']{
-		transform: scale(0.8) translateX(25%);
-		opacity: 0.8;
+		transform: scale(0.8) translateX(35%);
+		opacity: 1;
+		filter: brightness(102%);
+
+		.inner{
+			box-shadow: none;
+			*{
+				opacity: 0.6;
+			}
+		}
 
 		&[data-next='true']{
-			transform: scale(0.9) translateX(12%);
+			transform: scale(0.9) translateX(17%);
+			filter: brightness(101%);
 			z-index: 2;
 			.inner{
-				box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.0045), 0px 10px 20px rgba(0, 0, 0, 0.06);
+				box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.003), 0px 5px 10px rgba(0, 0, 0, 0.04);
 			}
 		}
 	}

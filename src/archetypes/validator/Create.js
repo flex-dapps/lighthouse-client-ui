@@ -21,7 +21,7 @@ const SidePanel =
 			}
 			>
 			<Validator.Partial.Investment.Full/>
-			<Card.Column.Divider/>
+			<Card.Column.Divider comfortable/>
 			<Validator.Partial.Reward.Full/>
 			<Card.Column.Divider/>
 		</Card.Column>	
@@ -68,7 +68,7 @@ const MainPanel =
 				Object.keys(state?.validators).length > 0
 					? <Scroll 
 						className="validators"
-						maxHeight={250}
+						maxHeight={280}
 						style={{marginTop: '2rem'}}
 						>
 						{
@@ -103,8 +103,8 @@ export default
 			<Section.Header title='Create Validators'/>
 
 			<Card>
-				<MainPanel width={72}/>
-				<SidePanel width={28}/>
+				<MainPanel width={71}/>
+				<SidePanel width={29}/>
 			</Card>
 
 			<Section.Footer>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components'
+import { ReactComponent as IconChevronDown } from '@assets/chevron_down.svg'
 
 export default styled(
 	({maxHeight, children=[], className, ...rest}) => {
@@ -31,7 +32,7 @@ export default styled(
 					{children}
 				</div>
 			</div>
-			{overflow && <div className='-more'>Scroll to view more</div>}
+			{overflow && <div className='-more'>Scroll to view more <IconChevronDown/></div>}
 		</div>
 	})`
 	position: relative; 
@@ -47,10 +48,18 @@ export default styled(
 		margin: 0.8rem auto 0;
 		display: block;
 		text-align: center;
-		font-size: var(--font-size-small);
+		font-size: var(--font-size-xsmall);
 		text-transform: uppercase;
 		font-weight: 600;
 		opacity: 0.4;
+
+		>svg{
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			font-size: var(--font-size-large);
+			transform: translateX(-50%);
+		}
 	}
 
 	&:before,
@@ -62,6 +71,7 @@ export default styled(
 		height: 0;
 		z-index: 2;
 		transition: height 0.3s;
+		pointer-events: none;
 	}
 
 	&:before{

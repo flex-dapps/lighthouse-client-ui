@@ -4,7 +4,6 @@ import { Centered } from '@layouts'
 import { Button, Tidbit, Status } from '@components'
 import { AppStore, HostStore } from '@store'
 import { ReactComponent as IconLogo } from '@assets/lighthouse_logo.svg';
-import { ReactComponent as IconArrowRight } from '@assets/arrow_right.svg';
 import BackgroundGraphic from '@assets/graphic_lavalamp.png';
 
 export default styled(
@@ -28,15 +27,11 @@ export default styled(
 				</h1>
 
 				<Button to={'/onboarding/health'}>
-					Create Validator
-					<IconArrowRight/>
+					Create Validator —
 				</Button>
 
-				<Button 
-					disabled={'soon'}
-					>
-					Import Account
-					<IconArrowRight/>
+				<Button disabled={'soon'}>
+					Import Account —
 				</Button>
 			</div>
 
@@ -47,6 +42,7 @@ export default styled(
 					info='Some info goes here'
 					subtitle='Continue dashboard with limited functionality -'
 					onClick={() => history.push('/')}
+					strong
 				/>
 
 				<Tidbit 
@@ -60,6 +56,7 @@ export default styled(
 						</Fragment>
 					}
 					right
+					strong
 				/>
 			</div>	
 
@@ -68,7 +65,6 @@ export default styled(
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	
 	background: var(--color-dark);
 	color: var(--color-light);
 
@@ -80,17 +76,26 @@ export default styled(
 	}
 	
 	.-logo{
-		font-size: 6rem;
-		margin: 8vw 0 6vw;
+		font-size: 6.3rem;
+		margin: 5.5rem 0 6.5rem;
+	}
+
+	.-background{
+		background-size: 105%;
 	}
 
 	.-title{
 		font-size: var(--font-size-xxlarge);
-		line-height: 1.2em;
-		margin-bottom: 1.4em;
+		line-height: 1.25em;
+		letter-spacing: 0.018em;
+		margin-bottom: calc(3.3rem + 1.2vw);
 		strong{
 			font-weight: 900;
 		}
+	}
+
+	.button + .button {
+		margin-left: 3rem;
 	}
 	
 	.-bottom{

@@ -47,7 +47,7 @@ const Section = styled(
 	}
 
 	.section-divider{
-		margin: 2rem 0 2.5rem;
+		margin: 2rem 0 3rem;
 		display: block;
 		opacity: 0.1;
 	}

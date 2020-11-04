@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Widget, Status, Progress } from '@components'
+import { Widget, Status, Progress, LazyBoi } from '@components'
 import { format } from '@util/helpers'
 import { ReactComponent as EthLighthouseLogo } from '@assets/logo_eth_lighthouse.svg';
 import { Host } from '@archetypes' 
@@ -70,7 +70,7 @@ const Minimal = props => {
 	return <Widget.Minimal
 		title='Beacon Chain'
 		subtitle='Syncing -'
-		info={`${format.commas(fields?.head_slot)}/${format.commas(fields?.total_slots)}`}
+		info={<LazyBoi value={fields?.head_slot && format.commas(fields?.head_slot)} suffix={`/ ${format.commas(fields?.total_slots)}`}/>}
 		extra={
 			<StyledProgress 
 				total={fields?.total_slots} 

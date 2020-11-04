@@ -118,7 +118,7 @@ Row.Editable = styled(
 	z-index: 1;
 	position: relative;
 
-	transition: all 0.3s ease-out;
+	transition: all 0.2s ease-out;
 
 	&[data-mounted='false']{
 		opacity: 0;

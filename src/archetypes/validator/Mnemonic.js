@@ -73,7 +73,7 @@ const Create = props => {
 				}
 				title='Secure Mnemonic Phrase Key'
 				subtitle='Save offline! Do not store on cloud. You will be required to confirm in next step'
-				width={72}
+				width={71}
 				>
 				<Mnemonic.Generate
 					phrase={state.mnemonic?.phrase}
@@ -83,7 +83,7 @@ const Create = props => {
 			</Card.Column>
 			
 			<Card.Column 
-				width={28}
+				width={29}
 				footer={
 					<DisclosureButton>
 						<Validator.Disclosure.Mnemonic/>
@@ -144,7 +144,7 @@ const Confirm = props => {
 				}
 				title='Confirm Mnemonic Phrase Key'
 				subtitle='Enter the corresponding words to the numbers presented in the previous step'
-				width={72}
+				width={71}
 				>
 				<Mnemonic.Confirm
 					phrase={state.mnemonic?.phrase}
@@ -158,7 +158,7 @@ const Confirm = props => {
 			</Card.Column>
 
 			<Card.Column 
-					width={28}
+					width={29}
 					footer={
 						<DisclosureButton>
 							<Validator.Disclosure.Mnemonic/>

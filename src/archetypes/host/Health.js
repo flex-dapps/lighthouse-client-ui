@@ -56,5 +56,4 @@ export default ({className}) => <Section
 			<IconArrowRight/>
 		</Button>
 	</Section.Footer>
-
 </Section>

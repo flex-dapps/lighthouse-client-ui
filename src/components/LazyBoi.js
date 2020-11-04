@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { ReactComponent as IconSpinner } from '@assets/spinner_50.svg';
+import { ReactComponent as IconSpinner } from '@assets/spinner_75.svg';
+import { ReactComponent as IconQuestion } from '@assets/question.svg';
 
 const Loader = styled(
 	({icon, className}) => {
-		return <span className={`lazyboi ${className}`}>{icon || <IconSpinner animate='spin'/>}</span>
+		const [ _icon, _setIcon ] = useState(icon || <IconSpinner animate='spin'/>)
+
+		useEffect(() => {
+			setTimeout(() => {
+				_setIcon && _setIcon(<IconQuestion className='-not-found'/>)
+			}, 4000)
+		}, [])
+
+		return <span className={`lazyboi ${className}`}>{_icon}</span>
 	})`
 	@keyframes pulse {
 	    0% {opacity:0.05}
@@ -17,6 +26,10 @@ const Loader = styled(
 		width: 0.8em;
 		height: 0.8em;
 		display: block;
+
+		&.-not-found{
+			opacity: 0.2
+		}
 	}
 	`
 
