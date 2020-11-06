@@ -42,17 +42,29 @@ const initialState = {
 	validated: false,
 	status: connectionStatus.DISCONNECTED,
 
+
 	lighthouse: {
 		bn: {
+			protocol: 'http',
+			address: '127.0.0.1',
+			port: 5052,
 			api: BeaconNode,
 			spec: {},
 			status: connectionStatus.DISCONNECTED,
 		},
 		vc: {
+			protocol: 'http',
+			address: '127.0.0.1',
+			port: 5062,
+			token: null,
 			api: ValidatorClient,
 			status: connectionStatus.DISCONNECTED,
 		},
 		status: connectionStatus.DISCONNECTED,
+		device: null,
+		name: null,
+		persist: false,
+		advanced: false
 	},
 
 	metrics: {
@@ -74,14 +86,21 @@ const triggers = {
 	connect: async ({trigger, state, set, history}) => {
 		set('lighthouse.status', connectionStatus.CONNECTING)
 
-		const { bn, vc } = state.lighthouse
+		const { bn, vc, advanced } = state.lighthouse
+
+		// formulate the URL's for BN and VC
+		// if advanced settings is false, use the BN protocol/address for the VC
+		const bn_uri = `${bn?.protocol}://${bn?.address}`
+		const vc_uri = !!advanced 
+			? `${vc?.protocol}://${vc?.address}` 
+			: `${bn?.protocol}://${bn?.address}`
 
 		// trigger connection to beacon node
-		bn.api.connect(state.address, state.port_bn)
+		bn.api.connect(bn_uri, bn?.port)
 		
 		// trigger connection to validator client
-		vc.api.apiKey = state.token
-		vc.api.connect(state.address, state.port_vc, state.token)	
+		vc.api.apiKey = vc?.token
+		vc.api.connect(vc_uri, vc?.port)	
 	}
 }
 
@@ -110,12 +129,12 @@ const subscribers = {
 				set('lighthouse.status', connectionStatus.ERROR)
 				state.logStore.set('item', {message: 'Beacon Node connection error'})
 				Notification.warning({
-					title: `Could not connect to the Lighthouse <strong>Beacon Node</strong> on <strong>${state.address}:${state.port_bn}</strong>`,
+					title: `Could not connect to the Lighthouse <strong>Beacon Node</strong> on <strong>${state.lighthouse?.bn?.protocol}://${state.lighthouse?.bn?.address}:${state.lighthouse?.bn?.port}</strong>`,
 					text: 'Make sure your beacon node client is running and your address/ports are correct',
 				})
 				set('error', {
 					key: 'address',
-					errors: [`Could not connect to the Lighthouse <strong>Beacon Node</strong> on <strong>${state.address}:${state.port_bn}</strong>`]
+					errors: [`Could not connect to the Lighthouse <strong>Beacon Node</strong> on <strong>${state.lighthouse?.bn?.protocol}://${state.lighthouse?.bn?.address}:${state.lighthouse?.bn?.port}</strong>`]
 				})
 				break;
 			case connectionStatus.DISCONNECTED:
@@ -144,12 +163,12 @@ const subscribers = {
 				set('lighthouse.status', connectionStatus.ERROR)
 				state.logStore.set('item', {message: 'Validator Client connection error'})
 				Notification.warning({
-					title: `Could not connect to the Lighthouse <strong>Validator Client</strong> on <strong>${state.address}:${state.port_vc}</strong>`,
+					title: `Could not connect to the Lighthouse <strong>Validator Client</strong> on <strong>${state.lighthouse?.vc?.protocol}://${state.lighthouse?.vc?.address}:${state.lighthouse?.vc?.port}</strong>`,
 					text: 'Make sure your validator client is running and your address/ports are correct',
 				})
 				set('error', {
 					key: 'address',
-					errors: [`Could not connect to the Lighthouse <strong>Validator Client</strong> on <strong>${state.address}:${state.port_vc}</strong>`]
+					errors: [`Could not connect to the Lighthouse <strong>Validator Client</strong> on <strong>${state.lighthouse?.vc?.protocol}://${state.lighthouse?.vc?.address}:${state.lighthouse?.vc?.port}</strong>`]
 				})
 				break;
 			case connectionStatus.DISCONNECTED:
@@ -165,14 +184,14 @@ const subscribers = {
 	'lighthouse.status': (status, {state, history}) => {
 		switch (status) {
 			case connectionStatus.CONNECTED:
-			Notification.success(`Connected to <strong>Lighthouse</strong> on <strong>${state.address}:${state.port_bn}/${state.port_vc}</strong>`)
+			Notification.success(`Connected to <strong>Lighthouse</strong>`)
 
 				const vc = state.lighthouse.vc.api
 
 				vc && vc.query('/validators')
 					.then(validators => {
-						//history.push(validators.length > 0 ? '/' : '/welcome')
-						history.push('/welcome')
+						history.push(validators.length > 0 ? '/' : '/welcome')
+						//history.push('/welcome')
 					})
 					.catch(e => {
 						history.push('/welcome')
@@ -188,7 +207,11 @@ const subscribers = {
 				break;
 		}
 	},
-	
+
+	'lighthouse.persist': (persist, {cache}) => {
+		cache.persist(persist)
+	},
+
 	// watch errors, set validity bit
 	errors: (val, {state, set}) => {
 		const errors = []
@@ -198,7 +221,7 @@ const subscribers = {
 				state?.errors?.port_vc, 
 				state?.errors?.token, 
 				state?.errors?.device, 
-				state?.errors?.name
+				state?.errors?.name,
 			)
 			.filter(s=>s)
 
@@ -216,7 +239,19 @@ const subscribers = {
 
 export default () => Store('hoststore', {
 	initialState: initialState,
-	persistent: ['address', 'token', 'device', 'name'],
+	persistent: [
+		'lighthouse.bn.protocol',
+		'lighthouse.bn.address',
+		'lighthouse.bn.port',
+		'lighthouse.vc.protocol',
+		'lighthouse.vc.address',
+		'lighthouse.vc.port',
+		'lighthouse.vc.token',
+		'lighthouse.device',
+		'lighthouse.name',
+		'lighthouse.persist',
+		'lighthouse.advanced',
+	],
 	triggers: triggers,
 	setters: setters,
 	subscribers: subscribers,

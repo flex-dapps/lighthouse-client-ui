@@ -1,5 +1,55 @@
 import { createGlobalStyle } from 'styled-components'
 
+import OpenSauceSans_Light from '@fonts/OpenSauceSans-Light.ttf'
+import OpenSauceSans_Regular from '@fonts/OpenSauceSans-Regular.ttf'
+import OpenSauceSans_Bold from '@fonts/OpenSauceSans-Bold.ttf'
+import Archivo_Bold from '@fonts/Archivo-Bold.ttf'
+
+// fonts
+export const Fonts = createGlobalStyle`	
+	@font-face {
+		font-family: 'OpenSauce';
+		font-style: light;
+		font-weight: 300;
+		font-display: auto;
+		src: url(${OpenSauceSans_Light}) format('truetype');
+	}
+
+	@font-face {
+		font-family: 'OpenSauce';
+		font-style: normal;
+		font-weight: 400;
+		font-display: auto;
+		src: url(${OpenSauceSans_Regular}) format('truetype');
+	}
+
+	@font-face {
+		font-family: 'OpenSauce';
+		font-style: bold;
+		font-weight: 700;
+		font-display: auto;
+		src: url(${OpenSauceSans_Bold}) format('truetype');
+	}
+
+	@font-face {
+		font-family: 'Archivo';
+		font-style: bold;
+		font-weight: 700;
+		font-display: auto;
+		src: url(${Archivo_Bold}) format('truetype');
+	}
+
+	body,
+	input,
+	select,
+	textarea{
+		font-family: 'OpenSauce', sans-serif;
+		font-weight: 400;
+		line-height: 1.4em;
+		//letter-spacing: -0.045em;
+	}
+`
+
 // vars
 export const Vars = createGlobalStyle`	
 	:root {
@@ -150,10 +200,12 @@ export const Components = createGlobalStyle`
 		--notification--default--border-color: #3A4B60;
 
 		// toggle
-		--field--toggle--off--background-color: var(--color-grey-50);
-		--field--toggle--off--indicator-color: var(--color-grey-200);
-		--field--toggle--on--background-color: rgba(var(--color-status-success-rgb), 0.2);
-		--field--toggle--on--indicator-color: var(--color-status-success);
+		--field--toggle--off--background-color: var(--color-grey-500);
+		--field--toggle--off--indicator-color: var(--color-light);
+		--field--toggle--off--icon-color: var(--color-grey-400);
+		--field--toggle--on--background-color: var(--color-primary-1);
+		--field--toggle--on--indicator-color: var(--color-light);
+		--field--toggle--on--icon-color: var(--color-primary-1);
 
 		// alerts
 		--alert--title--font-size: var(--font-size-normal);
@@ -172,21 +224,9 @@ export const Components = createGlobalStyle`
 	body{
 		color: var(--color-dark);
 		background: white;
-		font-weight: 400;
-		line-height: 1em;
-	}
-
-	body, input, textarea, button, select {
-		font-family: 'Raleway', sans-serif;
-	}
-
-	h1,h2,h3,h4,h5{
-		font-weight: 400;
-		line-height: 1.6em;
 	}
 
 	p{
-		line-height: 1.2em;
 		font-size: var(--font-size-normal)
 	}
 
@@ -227,5 +267,14 @@ export const Components = createGlobalStyle`
 	.paper > svg {
 		width: auto;
 		height: auto;
+	}
+
+
+	// define all uses of 'Archivo' font
+	.field > .-title-text,
+	.tabbed-nav-item{
+		font-family: 'Archivo', serif;
+		font-weight: 300;
+		text-transform: uppercase
 	}
 `

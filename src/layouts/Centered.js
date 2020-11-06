@@ -60,7 +60,7 @@ export default styled(
 		width: 100vw;
 		height: 100vh;
 		overflow: hidden;
-		overflow-y: scroll;
+		//overflow-y: scroll;
 		padding: 5.5vw 4vw;
 
 		background: var(--color-light);

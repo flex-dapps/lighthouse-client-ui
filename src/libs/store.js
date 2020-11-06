@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom"
-import { get, set, unset, isEqual, pick } from 'lodash'
+import { get, set, unset, isEqual, pick, merge } from 'lodash'
 import { v4 as uuidv4 } from 'uuid';
 import md5 from 'md5'
 import { JSONCycle } from '@util/helpers';
@@ -27,7 +27,6 @@ const storeController = (
 			onUpdate=()=>{}
 		}
 	) => {
-	
 		stores[name] = {
 			name: name,
 			status: StoreStatus.INITIALIZING,
@@ -37,6 +36,7 @@ const storeController = (
 			hydration: hydration,
 			triggers: triggers,
 			setters: setters,
+			persist: true,
 			persistent: persistent,
 			stateSubscriptions: {},
 			keySubscriptions: {},
@@ -46,11 +46,17 @@ const storeController = (
 			init: () => {
 				// hydrate from cache
 				let cachedState = stores[name].cache.hydrate()
-				stores[name].state = {...stores[name].state, ...cachedState||{}, ...stores[name].preInitState}
+
+				
+				//stores[name].state = {...stores[name].state, ...cachedState||{}, ...stores[name].preInitState}
+				// NOTE: changed to lodash merge so we can deep merge object
+				merge(stores[name].state, cachedState||{}, stores[name].preInitState)
 
 				// init with state
 				let initState = init(stores[name].buildCallbackObject(['hydrate']))
-				stores[name].state = {...stores[name].state, ...initState||{}}
+				//stores[name].state = {...stores[name].state, ...initState||{}}
+				// NOTE: changed to lodash merge so we can deep merge object
+				merge(stores[name].state, initState||{})
 
 				// init all subscribers passed as props
 				Object.keys(subscribers).forEach(key => stores[name].subscriptions.subscribe(key, subscribers[key]))
@@ -76,49 +82,6 @@ const storeController = (
 				}
 			},
 			
-			xx_____set: async (action, payload, callback=()=>{}) => {
-				const oldStore = JSONCycle(stores[name])
-				const oldState = oldStore.state
-				const oldStateHash = oldStore.stateHash
-
-				const func = get(stores[name].setters, action)
-				let newState = oldState
-
-				if(typeof func === "function"){
-					newState = await func(stores[name].buildCallbackObject(), payload)
-				}else{
-					newState = set(stores[name].state, action, payload)
-				}
-
-				// update the store state
-				stores[name].state = newState || stores[name].state
-
-				// get new state hash
-				//const newStateHash = md5(JSON.stringify(stores[name].state)) // REPLACTED WITH JSONCycle 8 OCT 2020
-				const newStateHash = md5(JSON.stringify(JSONCycle(stores[name].state)))
-			
-				// if the state has changed, update
-				if(newStateHash !== oldStateHash){
-
-					stores[name].stateHash = newStateHash
-
-					//fire set/trigger update callback
-					typeof callback === 'function' && callback(stores[name].buildCallbackObject())
-
-					//fire global subs
-					stores[name].subscriptions.fire('__GLOBAL')
-
-					// fire action subs
-					stores[name].subscriptions.fire(`__KEY.${action}`, get(stores[name].state, action, null))
-
-					// fire onUpdate callback
-					stores[name].subscriptions._triggerCallback(stores[name].onUpdate, stores[name].buildCallbackObject())
-
-					if(stores[name]?.persistent.includes(action)){
-						stores[name].cache.set(action, payload)
-					}
-				}
-			},
 			trigger: (action, payload) => new Promise(async resolve => {
 				const func = get(stores[name].triggers, action)
 				
@@ -180,7 +143,7 @@ const storeController = (
 						// fire onUpdate callback
 						stores[name].subscriptions._triggerCallback(stores[name].onUpdate, stores[name].buildCallbackObject())
 
-						if(payload && stores[name]?.persistent.includes(action)){
+						if(payload && stores[name]?.persist === true && stores[name]?.persistent.includes(action)){
 							stores[name].cache.set(action, payload)
 						}
 					}
@@ -190,12 +153,32 @@ const storeController = (
 				hydrate: () => {
 					const cached = {}
 					for (var i = 0; i < stores[name].persistent.length; i++) {
-						cached[stores[name].persistent[i]] = stores[name].cache.get(stores[name].persistent[i])
+						const key = stores[name].persistent[i]
+						let val = stores[name].cache.get(key)
+
+						if(val === 'true') val = true
+						if(val === 'false') val = false
+
+						if(val !== 'null' && val !== null){
+							set(cached, key, val)
+						}
 					}
 					return cached
 				},
 				set: (key, value) => localStorage.setItem(`${name}.${key}`, value),
-				get: (key) => localStorage.getItem(`${name}.${key}`)
+				get: (key) => localStorage.getItem(`${name}.${key}`),
+				clear: (key) => localStorage.removeItem(`${name}.${key}`),
+				persist: (on=true) => {
+					stores[name].persist = on||true
+					stores[name].persistent.forEach(key => {
+						if(on === true){
+							stores[name].cache.set(key, get(stores[name].state, key))
+						}else{
+							stores[name].cache.clear(key)
+						}
+					})
+				}
+
 			},
 			subscriptions: {
 				// subscriptions to when state is updated
@@ -305,6 +288,7 @@ const storeController = (
 					trigger: stores[name].trigger,
 					hydrate: stores[name].hydrate,
 					history: stores[name].history,
+					cache: stores[name].cache,
 					...pick(stores[name], additional)
 				}
 			}

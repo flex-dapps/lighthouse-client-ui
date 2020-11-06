@@ -10,6 +10,7 @@ import { AppStore } from '@store'
 import LoadingScreen from './App.loading'
 
 import { 
+	Fonts as ThemeFonts,
 	Vars as ThemeVars,
 	Base as ThemeBase,
 	Layout as ThemeLayout,
@@ -31,6 +32,7 @@ export default hot(
 		}, []) // eslint-disable-line
 
 		return <Fragment>
+			<ThemeFonts/>
 			<ThemeVars/>
 			<ThemeBase/>
 			<ThemeLayout/>

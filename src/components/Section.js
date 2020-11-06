@@ -71,7 +71,13 @@ const Section = styled(
 	`
 
 Section.Header = styled(
-	({context=[], title, titleIcon, subtitle, info, className}) => {
+	({
+		context=[], 
+		title, 
+		titleIcon, 
+		subtitle, 
+		className
+	}) => {
 		let history = useHistory();
 		return <header className={`section-header ${className}`}>
 			{context?.length > 0 && 
@@ -89,76 +95,76 @@ Section.Header = styled(
 			{subtitle && <h2 className="-subtitle">{subtitle}</h2>}
 		</header>
 	})`
+		>.-context{
+			font-size: var(--font-size-small);
+			margin: 0 0 0.5em 0;
+			display: flex;
+			align-items: center;
+			text-transform: uppercase;
+			line-height: 1em;
+			color: currentColor;
 
-	>.-context{
-		font-size: var(--font-size-small);
-		margin: 0 0 0.5em 0;
-		display: flex;
-		align-items: center;
-		text-transform: uppercase;
-		line-height: 1em;
-		color: currentColor;
-
-		.-back-icon{
-			height: 1em;
-			margin-right: 0.7em;
-			cursor: pointer;
-
-			&:hover{
-				color: var(--color-primary-1);
-			}
-		}
-
-		.-breadcrumb{
-			&:not(:last-child){
+			.-back-icon{
+				height: 1em;
+				margin-right: 0.7em;
+				cursor: pointer;
 
 				&:hover{
 					color: var(--color-primary-1);
 				}
+			}
 
-				&:after{
-					content: '/';
-					padding: 0 0.3em;
+			.-breadcrumb{
+				&:not(:last-child){
+
+					&:hover{
+						color: var(--color-primary-1);
+					}
+
+					&:after{
+						content: '/';
+						padding: 0 0.3em;
+					}
 				}
+
+				&:last-child{
+					font-weight: 600;
+				}
+
+
 			}
-
-			&:last-child{
-				font-weight: 600;
-			}
-
-
 		}
-	}
 
-	>.-title{
-		font-size: var(--font-size-xlarge);
-		margin: 0;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		position: relative;
-		width: 100%;
-
-		.-title-text{
+		>.-title{
 			font-size: var(--font-size-xlarge);
 			margin: 0;
-			line-height: 1.1em;
-			color: var(--color-primary-2);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: relative;
+			width: 100%;
 
-			background: var(--color-gradient-purp-horizontal);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
+			.-title-text{
+				font-size: var(--font-size-xlarge);
+				font-weight: 300;
+				margin: 0;
+				line-height: 1.2em;
+				color: var(--color-primary-2);
+
+				background: var(--color-gradient-purp-horizontal);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			.-title-icon{
+				color: var(--color-primary-2);
+			}
 		}
 
-		.-title-icon{
-			color: var(--color-primary-2);
+		>.-subtitle{
+			margin: 0.5em 0;
+			display: block;
 		}
-	}
-
-	>.-subtitle{
-		margin: 0.5em 0;
-		display: block;
-	}
 	`
 Section.Header.displayName = 'SectionHeader'
 

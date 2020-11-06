@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Centered } from '@layouts'
 import { Host } from '@archetypes'
+import { HostStore } from '@store'
 import { ReactComponent as BackgroundGraphic } from '@assets/graphic_logo.svg';
 
 export default styled(
 	({className, ...rest}) => {
+		const { state, history } = HostStore()
+
+		useEffect(() => {
+			if(state.lighthouse?.status === 'CONNECTED'){
+				history.push('/welcome')
+			}
+		})
+
 		return <Centered
 			className={className}
 			background={<BackgroundGraphic/>}

@@ -299,6 +299,7 @@ module.exports = function(webpackEnv) {
         '@components': path.resolve('src/components'),
         '@routes': path.resolve('src/routes'),
         '@libs': path.resolve('src/libs'),
+        '@fonts': path.resolve('src/fonts'),
         
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/

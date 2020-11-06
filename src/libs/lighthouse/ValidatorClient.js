@@ -138,6 +138,5 @@ const ValidatorClient = class extends Lighthouse{
 	}
 }
 
-
 const instance = new ValidatorClient();
 export default instance;
