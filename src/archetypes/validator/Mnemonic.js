@@ -13,7 +13,7 @@ import { ReactComponent as IconCopy } from '@assets/copy.svg';
 
 const ButtonPrint = ({val}) => 
 	<Button.Action 
-		small
+		compact
 		icon={<IconPrint/>}
 		onClick={() => {
 			Notification.success('Seed phrase sent to printer')
@@ -25,11 +25,14 @@ const ButtonPrint = ({val}) =>
 
 const ButtonDownload = ({val}) => 
 	<Button.Action 
-		small
+		compact
 		icon={<IconDownload/>}
 		onClick={() => {
-			Notification.success('Seed phrase file created')
-			downloadFile('lighthouse_seed.txt', val)
+			const confirmed = window.confirm('Warning: Saving the file to a public or unencrypted partition can result in loss of funds! Confirm you wish to downlaod the seed phrase.')
+			if(confirmed){
+				Notification.success('Seed phrase file created')
+				downloadFile('lighthouse_seed.txt', val)
+			}
 		}}
 		>
 		Download to computer
@@ -37,12 +40,15 @@ const ButtonDownload = ({val}) =>
 
 const ButtonCopy = ({val}) => 
 	<Button.Action 
-		small
+		compact
 		icon={<IconCopy/>}
 		onClick={() => {
-			const notification = Notification.processing('Copying...')
-			setTimeout(() => notification.success({title: 'Seed phrase copied'}), 1000)
-			copyToClipboard(val)
+			const confirmed = window.confirm('Warning: Copying to clipboard can result in lost funds if the clipboard is accessed maliciously or accidentally by another program! Confirm you wish to copy the seed prhase.')
+			if(confirmed){
+				const notification = Notification.processing('Copying...')
+				setTimeout(() => notification.success({title: 'Seed phrase copied'}), 1000)
+				copyToClipboard(val)
+			}
 		}}
 		>
 		Copy to clipboard
