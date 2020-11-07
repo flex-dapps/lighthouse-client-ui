@@ -6,7 +6,6 @@ const Ram = props => {
 	const memory = Host.useHealth('memory')
 	return <Widget 
 		title='RAM'
-		value={<LazyBoi value={memory.percent}/>}
 		value={<LazyBoi value={(memory.total * 0.000000001).toFixed(2)} suffix='GB' tight/>}
 		info={<LazyBoi value={memory.gauge_pct} suffix='% Utilization' tight/>}
 		extra={<Icon large/>}
@@ -18,7 +17,7 @@ const Ram = props => {
 const Icon = props => {
 	const memory = Host.useHealth('memory')
 	return <Status.Dot 
-		status={memory.status?.toLowerCase()}
+		status={memory.status}
 		lifted
 		{...props}
 	/>
@@ -27,7 +26,7 @@ const Icon = props => {
 const Text = props => {
 	const memory = Host.useHealth('memory')
 	return <Status 
-		status={memory.status?.toLowerCase()} 
+		status={memory.status} 
 		title={memory.message} 
 		{...props}
 	/>

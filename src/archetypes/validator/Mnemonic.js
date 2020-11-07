@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { ValidatorStore } from '@store'
 import { Validator } from '@archetypes'
 import { Button, Section, Card, Mnemonic, Notification, DisclosureButton } from '@components'
-import { downloadFile, copyToClipboard, printString } from '@util/helpers'
-
 import { ReactComponent as IconArrowRight } from '@assets/arrow_right.svg';
 import { ReactComponent as IconPrint } from '@assets/print.svg';
 import { ReactComponent as IconDownload } from '@assets/download.svg';
@@ -74,7 +72,10 @@ const Create = props => {
 				<Mnemonic.Generate
 					phrase={state.mnemonic?.phrase}
 					entrpoy={256}
-					onChange={phrase => set('mnemonic.phrase', phrase)}
+					onChange={phrase => {
+						set('mnemonic.phrase', phrase)
+						set('mnemonic.confirmed', false)
+					}}
 				/>
 			</Card.Column>
 			
@@ -115,7 +116,10 @@ const Confirm = props => {
 	})
 
 	useState(() => {
-		set('mnemonic.confirmed', true)
+		// if we've already confirmed, 
+		if(state.mnemonic?.confirmed === true){
+			history.push('/onboarding/confirm')
+		}
 	}, [])
 
 	return <Section 

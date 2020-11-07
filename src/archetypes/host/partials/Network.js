@@ -15,7 +15,7 @@ const Network = props => {
 }
 
 const Icon = props => {
-	const network = Host.useHealth('network')
+	//const network = Host.useHealth('network')
 	return <Status.Dot 
 		status={'ok'} 
 		lifted

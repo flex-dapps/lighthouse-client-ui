@@ -1,5 +1,4 @@
 import Lighthouse from './_lighthouse'
-import { metricStatus, defaultMetricValues } from './_common'
 
 const ValidatorClient = class extends Lighthouse{
 	

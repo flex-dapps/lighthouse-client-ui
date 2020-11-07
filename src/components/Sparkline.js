@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
+import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 export default styled(
 	({data=[], min=0, max=100, limit=10, className, ...rest}) => <span className={className}>

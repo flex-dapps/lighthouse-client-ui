@@ -58,7 +58,6 @@ const triggers = {
 	},
 
 	validator: {
-
 		add: ({set, state}, name) => {
 			// id is a non-persistent internal reference for front-end session use,
 			// not intrinsicly coupled to the validator instance in lighthouse

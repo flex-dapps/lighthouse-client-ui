@@ -1,5 +1,4 @@
 import Lighthouse from './_lighthouse'
-import { metricStatus } from './_common'
 
 const BeaconNode = class extends Lighthouse{
 	
@@ -129,7 +128,7 @@ const BeaconNode = class extends Lighthouse{
 	}
 
 	processDatapoints(key, value){
-		const datapoints = this.datapoints[key].push(value)
+		this.datapoints[key].push(value)
 		this.datapoints[key].length > 10 && this.datapoints[key].shift()
 		return this.datapoints[key]
 	}
