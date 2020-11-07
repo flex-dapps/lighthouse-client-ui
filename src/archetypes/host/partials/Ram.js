@@ -3,54 +3,55 @@ import { Widget, Status, Sparkline, LazyBoi } from '@components'
 import { Host } from '@archetypes' 
 
 const Ram = props => {
-	const ram = Host.useHealth('ram')
+	const memory = Host.useHealth('memory')
 	return <Widget 
-		disabled={ram?.status === 'CONCERN' && ram.message}
 		title='RAM'
-		value={<LazyBoi value={ram.used}/>}
-		info={<LazyBoi value={ram.utilization}/>}
+		value={<LazyBoi value={memory.percent}/>}
+		value={<LazyBoi value={(memory.total * 0.000000001).toFixed(2)} suffix='GB' tight/>}
+		info={<LazyBoi value={memory.gauge_pct} suffix='% Utilization' tight/>}
 		extra={<Icon large/>}
-		background={<Sparkline data={ram.dataPoints}/>}
+		background={<Sparkline data={memory.datapoints} width={312} height={100}/>}
 		{...props}
 	/>
 }
 
 const Icon = props => {
-	const ram = Host.useHealth('ram')
+	const memory = Host.useHealth('memory')
 	return <Status.Dot 
-		status={ram.status?.toLowerCase()} 
+		status={memory.status?.toLowerCase()}
+		lifted
 		{...props}
 	/>
 }
 
 const Text = props => {
-	const ram = Host.useHealth('ram')
+	const memory = Host.useHealth('memory')
 	return <Status 
-		status={ram.status?.toLowerCase()} 
-		title={ram.message} 
+		status={memory.status?.toLowerCase()} 
+		title={memory.message} 
 		{...props}
 	/>
 }
 
 const Minimal = props => {
-	const ram = Host.useHealth('ram')
+	const memory = Host.useHealth('memory')
 	return <Widget.Minimal
 		title='RAM'
 		subtitle='Utilization -'
-		info={<LazyBoi value={ram.utilization}/>}
-		extra={<Sparkline data={ram.dataPoints}/>}
+		info={<LazyBoi value={memory.utilization}/>}
+		extra={<Sparkline data={memory.dataPoints}/>}
 		{...props}
 	/>
 }
 
 const Full = props => {
-	const ram = Host.useHealth('ram')
+	const memory = Host.useHealth('memory')
 	return <Widget 
 		title='RAM'
-		value={<LazyBoi value={ram.used}/>}
-		info={<LazyBoi value={ram.utilization}/>}
+		value={<LazyBoi value={memory.used}/>}
+		info={<LazyBoi value={memory.utilization}/>}
 		extra={<Icon large/>}
-		background={<Sparkline data={ram.dataPoints}/>}
+		background={<Sparkline data={memory.dataPoints}/>}
 		{...props}
 	/>
 }

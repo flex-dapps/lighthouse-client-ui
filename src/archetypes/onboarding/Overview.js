@@ -27,8 +27,10 @@ export default styled(
 	)`
 	.-title{
 		font-size: var(--font-size-xxxlarge);
-		line-height: 1.2em;
-		max-width: 90rem;
+		line-height: 1.26em;
+		max-width: 95rem;
+		font-weight: 300;
+		letter-spacing: 0.01em;
 		background: var(--color-gradient-purp-horizontal);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;

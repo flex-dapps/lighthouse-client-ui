@@ -184,10 +184,13 @@ Card.Column = styled(
 
 		.card-title{
 			.tidbit-title{
-				font-size: var(--font-size-large);
+				font-size: var(--font-size-medium);
+				font-weight: 300;
+				color: var(--color-grey-500)
 			}
 			.tidbit-subtitle{
 				font-size: var(--font-size-normal);
+				font-weight: 300;
 			}
 		}
 

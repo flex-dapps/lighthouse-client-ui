@@ -16,3 +16,4 @@ See https://lighthouse-book.sigmaprime.io/api.html for more information
 `REACT_APP_STAKING_REWARD_MULTIPLIER=1.6819` basic annual staking rewards per node
 `REACT_APP_MNEMONIC_CONFIRMATION_TYPE=ALL` ALL|TWOROWS type of mnemonic confirmation to perform
 `REACT_APP_ALLOW_MNEMONIC_CONFIRMATION_SKIP=false` true|false to allow easy skipping on mnemonic confirmation (use when testing)
+`REACT_APP_HEALTH_POLLING_INTERVAL=5000` interval (in ms) to poll client for health updates

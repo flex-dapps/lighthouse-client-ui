@@ -100,7 +100,8 @@ export default styled(
 
 			.-title{
 				font-size: var(--font-size-medium);
-				margin-bottom: 0;
+				margin-bottom: 1rem;
+				opacity: 0.8;
 			}
 		}
 

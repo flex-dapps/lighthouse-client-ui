@@ -21,8 +21,8 @@ export default styled(
 				<IconLogo className='-logo'/>
 
 				<h1 className='-title'>
-					Hello {state?.name},<br/>
-					Welcome to <strong>LIGHTHOUSE</strong><br/> 
+					Hello {state?.lighthouse?.name},<br/>
+					Welcome to <span className='phat-phont'>LIGHTHOUSE</span><br/> 
 					the Ethereum Validator Client
 				</h1>
 
@@ -47,7 +47,7 @@ export default styled(
 
 				<Tidbit 
 					className='-network'
-					title={`${state?.address}:${state?.port_bn}`}
+					title={`${state?.lighthouse?.bn?.protocol}://${state?.lighthouse?.bn?.address}:${state?.lighthouse?.bn?.port}`}
 					subtitle={
 						<Fragment>
 							<Status.Dot status={'success'} small/> 
@@ -56,7 +56,7 @@ export default styled(
 						</Fragment>
 					}
 					right
-					strong
+					//strong
 				/>
 			</div>	
 
@@ -80,14 +80,9 @@ export default styled(
 		margin: 5.5rem 0 6.5rem;
 	}
 
-	.-background{
-		background-size: 105%;
-	}
-
 	.-title{
 		font-size: var(--font-size-xxlarge);
 		line-height: 1.25em;
-		letter-spacing: 0.018em;
 		margin-bottom: calc(3.3rem + 1.2vw);
 		strong{
 			font-weight: 900;

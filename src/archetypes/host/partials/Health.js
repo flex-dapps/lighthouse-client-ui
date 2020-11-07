@@ -56,12 +56,12 @@ const Overview = ({className, ...rest}) => <Card>
 		<Host.Partial.Disk.Text/>
 		<Host.Partial.Cpu.Text/>
 		<Host.Partial.Ram.Text/>
-		<Host.Partial.Network.Text/>
+		{/*<Host.Partial.Network.Text/>*/}
 		<Host.Partial.Eth.Text/>
-		<Host.Partial.Beacon.Text/>
+		{/*<Host.Partial.Beacon.Text/>*/}
 	</Card.Column>
 
-	<Card.Column 
+	{/*<Card.Column 
 		title={'Uptime'}
 		width={28}
 		noborder
@@ -69,7 +69,7 @@ const Overview = ({className, ...rest}) => <Card>
 			<Text style={{fontSize: '1.6rem'}}/>
 		}
 		>
-	</Card.Column>
+	</Card.Column>*/}
 </Card>
 
 

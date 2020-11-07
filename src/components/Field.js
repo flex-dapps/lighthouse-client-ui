@@ -14,13 +14,6 @@ const FieldTitleText  = styled(
 	letter-spacing: 0.05em;
 	display: block;
 	`
-const FieldSubtitleText  = styled(
-	({children, className, ...rest}) => <span className={`-subtitle-text ${className}`} {...rest}>{children}</span>)`
-	opacity: 0.7;
-	font-size: 1em;
-	font-weight: 400;
-	display: block;
-	`
 
 const FieldTemplate = styled(
 	({

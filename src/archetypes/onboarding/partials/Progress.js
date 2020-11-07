@@ -180,12 +180,12 @@ export default styled(
 	}
 
 	>.-title{
-		font-size: var(--font-size-small);
+		font-size: var(--font-size-xsmall);
 		padding: 0 6rem 0 2rem;
 	}
 
 	>.-percent{
-		font-size: var(--font-size-xlarge);
+		font-size: var(--font-size-large);
 		font-weight: 600;
 		padding: 0 2rem;
 		text-align: right;

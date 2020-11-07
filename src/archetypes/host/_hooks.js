@@ -4,10 +4,10 @@ import { HostStore } from '@store'
 
 export const useHealth = type => {
 	const { state, subscribe } = HostStore()
-	const [ data, setData ] = useState(get(state, `metrics.${type}`)||{})
+	const [ data, setData ] = useState(get(state, `health.${type}`)||{})
 
 	useEffect(() => {
-		let sub = subscribe(`metrics.${type}`, setData)
+		let sub = subscribe(`health.${type}`, setData)
 		return () => sub.unsubscribe()
 	}, []) // eslint-disable-line
 

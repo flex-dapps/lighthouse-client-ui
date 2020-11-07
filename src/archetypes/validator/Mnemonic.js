@@ -11,48 +11,38 @@ import { ReactComponent as IconDownload } from '@assets/download.svg';
 import { ReactComponent as IconCopy } from '@assets/copy.svg';
 
 
-const ButtonPrint = ({val}) => 
-	<Button.Action 
+const ButtonPrint = ({val}) => {
+	const { trigger } = ValidatorStore()
+	return <Button.Action 
 		compact
 		icon={<IconPrint/>}
-		onClick={() => {
-			Notification.success('Seed phrase sent to printer')
-			setTimeout(() => printString(val), 200)
-		}}
+		onClick={() => trigger('mnemonic.print')}
 		>
 		Print from device
 	</Button.Action>
+}
 
-const ButtonDownload = ({val}) => 
-	<Button.Action 
+const ButtonDownload = ({val}) => {
+	const { trigger } = ValidatorStore()
+	return <Button.Action 
 		compact
 		icon={<IconDownload/>}
-		onClick={() => {
-			const confirmed = window.confirm('Warning: Saving the file to a public or unencrypted partition can result in loss of funds! Confirm you wish to downlaod the seed phrase.')
-			if(confirmed){
-				Notification.success('Seed phrase file created')
-				downloadFile('lighthouse_seed.txt', val)
-			}
-		}}
+		onClick={() => trigger('mnemonic.download')}
 		>
 		Download to computer
 	</Button.Action>
+}
 
-const ButtonCopy = ({val}) => 
-	<Button.Action 
+const ButtonCopy = ({val}) => {
+	const { trigger } = ValidatorStore()
+	return <Button.Action 
 		compact
 		icon={<IconCopy/>}
-		onClick={() => {
-			const confirmed = window.confirm('Warning: Copying to clipboard can result in lost funds if the clipboard is accessed maliciously or accidentally by another program! Confirm you wish to copy the seed prhase.')
-			if(confirmed){
-				const notification = Notification.processing('Copying...')
-				setTimeout(() => notification.success({title: 'Seed phrase copied'}), 1000)
-				copyToClipboard(val)
-			}
-		}}
+		onClick={() => trigger('mnemonic.copy')}
 		>
 		Copy to clipboard
 	</Button.Action>
+}
 
 const Create = props => {
 	const { state, set } = ValidatorStore()

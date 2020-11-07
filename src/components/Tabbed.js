@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 
-const animationSpeedMS = 150
-
 const TabbedNav = styled(
 	({items, current, onChange=()=>{}, className}) => {
 		return <div className={`tabbed-nav ${className}`}>

@@ -11,10 +11,10 @@ export default ({className}) => <Section
 
 	<Section.Header
 		context={[
-			<Link to={'/welcome'}>Home</Link>,
-			'Health Check'
+			<Link to={'/welcome'}>Welcome</Link>,
+			'Health'
 		]}
-		title='Host Health'
+		title='Host Health Check'
 		titleIcon={<IconHealth/>}
 	/>
 

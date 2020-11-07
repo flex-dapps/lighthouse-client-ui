@@ -15,9 +15,9 @@ const StyledProgress = styled(
 		/>
 	})`
 	.CircularProgressbar{
-		font-size: 2rem;
-		.CircularProgressbar-path{ stroke-width: 0.8em }
-		.CircularProgressbar-trail{ stroke-width: 0.6em }
+		font-size: 3rem;
+		.CircularProgressbar-path{ stroke-width: 0.6em }
+		.CircularProgressbar-trail{ stroke-width: 0.4em }
 	}
 	`
 
@@ -25,10 +25,10 @@ const StyledProgress = styled(
 const Eth = props => {
 	const fields = Host.useHealth('eth')
 	return <Widget 
-		disabled={fields.status === 'ERROR' && fields.message}
+		//disabled={fields.status === 'ERROR' && fields.message}
 		title='ETH 1.0 Chain'
-		value={`${format.commas(fields?.head_block_number)}/${format.commas(fields?.latest_cached_block_number)}`}
-		info={<Status status={fields.status?.toLowerCase()} title={fields?.message}/>}
+		value={<LazyBoi value={(100 / fields?.head_block_number * fields?.latest_cached_block_number||0)} suffix='%' tight/>}
+		info={<Status status={fields?.status} title={fields?.latest_cached_block_number||'No ETH1 connection'}/>}
 		extra={
 			<StyledProgress 
 				total={fields?.head_block_number} 
@@ -44,11 +44,10 @@ const Full = styled(
 	({className}) => {
 		const fields = Host.useHealth('eth')
 		return <Widget 
-			disabled={fields.status === 'ERROR' && fields.message}
 			className={className}
 			title='ETH 1.0 Chain'
 			value={`${format.commas(fields?.head_block_number)}/${format.commas(fields?.latest_cached_block_number)}`}
-			info={<Status status={fields?.status} title={fields?.message}/>}
+			info={<Status status={fields?.status} title={fields?.latest_cached_block_number||'No ETH1 connection'}/>}
 			background={
 				<StyledProgress 
 					total={fields?.head_block_number} 
@@ -62,6 +61,11 @@ const Full = styled(
 	
 	height: 30rem !important;
 
+	.-background{
+		width: auto;
+		height: auto;
+	}
+
 	.-spinner-icon{
 		font-size: 8rem;
 		opacity: 0.1
@@ -73,8 +77,12 @@ const Minimal = props => {
 	return <Widget.Minimal
 		//disabled={fields.status === 'ERROR' && fields.message}
 		title='ETH 1.0 Chain'
-		subtitle='Syncing -'
-		info={<LazyBoi value={fields?.head_block_number && format.commas(fields?.head_block_number)} suffix={`/ ${format.commas(fields?.latest_cached_block_number)}`}/>}
+		subtitle={fields?.head_block_number ? 'Syncing -' : <Status status={fields?.status} title='Error'/>}
+		info={
+			fields?.head_block_number 
+				? <LazyBoi value={fields?.head_block_number && format.commas(fields?.head_block_number)} suffix={`/ ${format.commas(fields?.latest_cached_block_number)}`}/>
+				: null
+		}
 		extra={
 			<StyledProgress 
 				total={fields?.head_block_number} 
@@ -87,7 +95,11 @@ const Minimal = props => {
 
 const Icon = props => {
 	const fields = Host.useHealth('eth')
-	return <Status.Dot status={fields?.status?.toLowerCase()} {...props}/>
+	return <Status.Dot 
+		status={fields?.status} 
+		{...props}
+		lifted
+		/>
 }
 
 const Text = props => {

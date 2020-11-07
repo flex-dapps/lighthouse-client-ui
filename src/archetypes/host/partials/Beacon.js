@@ -14,19 +14,19 @@ const StyledProgress = styled(
 		/>
 	})`
 	.CircularProgressbar{
-		font-size: 2rem;
-		.CircularProgressbar-path{ stroke-width: 0.8em }
-		.CircularProgressbar-trail{ stroke-width: 0.6em }
+		font-size: 3rem;
+		.CircularProgressbar-path{ stroke-width: 0.6em }
+		.CircularProgressbar-trail{ stroke-width: 0.4em }
 	}
 	`
 
 const Beacon = props => {
 	const fields = Host.useHealth('beacon')
+	console.log(7777, fields)
 	return <Widget 
-		disabled={fields.status === 'CONCERN' && fields.message}
 		title='Beacon Node'
-		value={`${format.commas(fields?.head_slot)}/${format.commas(fields?.total_slots)}`}
-		info={<Status status={fields.status?.toLowerCase()} title={fields?.message}/>}
+		value={<LazyBoi value={(100 / fields?.total_slots * fields?.head_slot).toFixed(2)} suffix='%' tight/>}
+		info={`${format.commas(fields?.head_slot)}/${format.commas(fields?.total_slots)}`}
 		extra={
 			<StyledProgress 
 				total={fields?.total_slots} 
@@ -59,6 +59,12 @@ const Full = styled(
 		/>
 	})`
 	height: 30rem !important;
+
+	.-background{
+		width: auto;
+		height: auto;
+	}
+	
 	.-spinner-icon{
 		font-size: 8rem;
 		opacity: 0.1
@@ -83,12 +89,12 @@ const Minimal = props => {
 
 const Icon = props => {
 	const fields = Host.useHealth('beacon')
-	return <Status.Dot status={fields?.status?.toLowerCase()} lifted {...props}/>
+	return <Status.Dot status={fields?.status} lifted {...props}/>
 }
 
 const Text = props => {
 	const fields = Host.useHealth('beacon')
-	return <Status status={fields?.status?.toLowerCase()} title={fields?.message} {...props}/>
+	return <Status status={fields?.status} title={fields?.message} {...props}/>
 }
 
 Beacon.Full = Full

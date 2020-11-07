@@ -19,6 +19,7 @@ const Syncing = () => {
 				<Status status={hostState.metrics?.beacon?.status}  title='Beacon node synced' info='Creating validators before the Beacon node has completely synced may cause issues...'/>
 				<Divider/>
 				<Field.Toggle 
+					inline
 					title="Override"
 					info='I acknowledge this may cause unwanted side effects'
 					onChange={confirmed => set('confirmed.syncing', confirmed)}
@@ -57,6 +58,7 @@ const Validators = () => {
 				/>
 				<Divider/>
 				<Field.Toggle 
+					inline
 					title="Confirm validators"
 					info='I acknowledge these details are correct'
 					onChange={confirmed => set('confirmed.validators', confirmed)}
@@ -91,6 +93,7 @@ const Keys = () => {
 				/>
 				<Divider/>
 				<Field.Toggle 
+					inline
 					title="Confirm keys"
 					info='I acknowledge I have backed-up my key phrase'
 					onChange={confirmed => set('confirmed.keys', confirmed)}
@@ -171,6 +174,7 @@ export default styled(
 
 		p{
 			opacity: 0.6;
+			font-size: var(--font-size-small)
 		}
 
 		.card-column-footer{

@@ -5,12 +5,12 @@ import { Host } from '@archetypes'
 const Disk = props => {
 	const disk = Host.useHealth('disk')
 	return <Widget 
-		disabled={disk.status === 'CONCERN' && disk.message}
+		//disabled={disk.status === 'warn' && disk.message}
 		title='Disk'
-		value={<LazyBoi value={disk.used}/>}
-		info={<LazyBoi value={disk.utilization}/>}
+		value={<LazyBoi value={(disk.total * 0.000000001).toFixed(2)} suffix='GB' tight/>}
+		info={<LazyBoi value={disk.gauge_pct} suffix='% Utilization' tight/>}
 		extra={<Icon large/>}
-		background={<Sparkline data={disk.dataPoints}/>}
+		background={<Sparkline data={disk.datapoints} width={312} height={100}/>}
 		{...props}
 	/>
 }
@@ -18,7 +18,8 @@ const Disk = props => {
 const Icon = props => {
 	const disk = Host.useHealth('disk')
 	return <Status.Dot 
-		status={disk.status?.toLowerCase()} 
+		status={disk.status}
+		lifted
 		{...props}
 	/>
 }
@@ -26,7 +27,7 @@ const Icon = props => {
 const Text = props => {
 	const disk = Host.useHealth('disk')
 	return <Status 
-		status={disk.status?.toLowerCase()} 
+		status={disk.status} 
 		title={disk.message} 
 		{...props}
 	/>
@@ -37,7 +38,7 @@ const Minimal = props => {
 	return <Widget.Minimal
 		title='Disk'
 		subtitle='Utilization -'
-		info={<LazyBoi value={disk.utilization}/>}
+		info={<LazyBoi value={disk.gauge_pct}/>}
 		extra={
 			<Sparkline data={disk.dataPoints}/>
 		}

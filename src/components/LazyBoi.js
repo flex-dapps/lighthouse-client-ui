@@ -43,8 +43,8 @@ const Value = styled(
 	)`
 	display: flex;
 	white-space: pre;
-	.-prefix{ margin-right: ${({tight}) => !!tight ? 1 : 0.3}em }
-	.-suffix{ margin-left: ${({tight}) => !!tight ? 1 : 0.3}em }
+	.-prefix{ margin-right: ${({tight}) => !!tight ? 0 : 0.3}em }
+	.-suffix{ margin-left: ${({tight}) => !!tight ? 0 : 0.3}em }
 	`
 
 const LazyBoi = props => (props.value !== null && props.value !== undefined) ? <Value {...props}/> : <Loader icon={props.loadingIcon}/>

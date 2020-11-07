@@ -5,12 +5,11 @@ import { Host } from '@archetypes'
 const Network = props => {
 	const network = Host.useHealth('network')
 	return <Widget 
-		disabled={network.status === 'CONCERN' && network.message}
 		title='Network'
-		value={<LazyBoi value={network.used}/>}
-		info={<LazyBoi value={network.utilization}/>}
+		//value={<LazyBoi value={network.used}/>}
+		info={<LazyBoi value={(network.rx_bytes * 0.000001).toFixed(2)} suffix='MB'/>}
 		extra={<Icon large/>}
-		background={<Sparkline data={network.dataPoints}/>}
+		background={<Sparkline data={network.datapoints} width={312} height={100} min={network.datapoints[network.datapoints.length - 1] * 0.9995} max={network.datapoints[network.datapoints.length - 1] * 1.0005}/>}
 		{...props}
 	/>
 }
@@ -18,7 +17,8 @@ const Network = props => {
 const Icon = props => {
 	const network = Host.useHealth('network')
 	return <Status.Dot 
-		status={network.status?.toLowerCase()} 
+		status={'ok'} 
+		lifted
 		{...props}
 	/>
 }
@@ -26,7 +26,7 @@ const Icon = props => {
 const Text = props => {
 	const network = Host.useHealth('network')
 	return <Status 
-		status={network.status?.toLowerCase()} 
+		status={network.status} 
 		title={network.message} 
 		{...props}
 	/>

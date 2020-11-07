@@ -9,6 +9,14 @@ const BeaconNode = class extends Lighthouse{
 		'/config/spec': -1
 	}
 
+	datapoints = {
+		disk: [],
+		cpu: [],
+		memory: [],
+		network: [],
+		p2p: [],
+	}
+
 	constructor(){
 		super()
 		this.cache.configure(this.#_to_cache)
@@ -29,69 +37,101 @@ const BeaconNode = class extends Lighthouse{
 	}
 
 	onConnection(){
-		this.subscribe('/eth/v1/node/syncing', (data, cbs, error) => {
-			if(error){
-				this.dispatch('beacon.health', {
-					message: 'Beacon sync error',
-					status: metricStatus.ERROR
+		// poll beacon node sync status
+		this.subscribe(
+			'/eth/v1/node/syncing', 
+			(data, cbs, error) => {
+				if(error){
+					cbs.unsubscribe()
+					return;
+				}
+				this.dispatch('health.beacon', {
+					...data,
+					total_slots: +data?.head_slot + +data?.sync_distance,
 				})
-				return;
-			}
-			this.processBeaconData(data)
+			},
+			process.env.REACT_APP_HEALTH_POLLING_INTERVAL
+		)
+
+		// poll eth1 sync status
+		this.subscribe(
+			'/lighthouse/eth1/syncing', 	
+			(data, cbs, error) => {
+				if(
+					error || 
+					(
+						!data?.head_block_number && 
+						!data?.head_block_timestamp && 
+						!data?.latest_cached_block_number
+					)
+				){
+					cbs.unsubscribe()
+				}
+
+				this.dispatch('health.eth', data)
+			},
+			process.env.REACT_APP_HEALTH_POLLING_INTERVAL
+		)
+
+		// subscribe to lighthouse health
+		this.subscribe(
+			'/lighthouse/health', 
+			(data, cbs, error) => {
+				if(error){
+					cbs.unsubscribe()
+					return;
+				}
+
+				this.processHealth(data)
+			},
+			process.env.REACT_APP_HEALTH_POLLING_INTERVAL
+		)
+	}
+
+	processHealth(data){
+		this.dispatch('health.disk', {
+			...data.database_status,
+			...data.chain_database,
+			datapoints: this.processDatapoints('disk', data.database_status.gauge_pct)
 		})
 
-		this.subscribe('/lighthouse/eth1/syncing', (data, cbs, error) => {
-			if(
-				error || 
-				(
-					!data?.head_block_number && 
-					!data?.head_block_timestamp && 
-					!data?.latest_cached_block_number
-				)
-			){
-				this.dispatch('eth.health', {
-					percent: data?.eth1_node_sync_status_percentage,
-					message: 'ETH 1.0 connection error',
-					status: metricStatus.ERROR
-				})
-				return;
-			}
+		this.dispatch('health.cpu', {
+			...data.cpu_status,
+			load_1: data.sys_loadavg_1,
+			load_5: data.sys_loadavg_5,
+			load_15: data.sys_loadavg_15,
+			datapoints: this.processDatapoints('cpu', data.sys_loadavg_5)
+		})
 
-			this.processEthData(data)
+		this.dispatch('health.memory', {
+			...data.memory_status,
+			available: data.sys_virt_mem_available,
+			free: data.sys_virt_mem_free,
+			percent: data.sys_virt_mem_percent,
+			total: data.sys_virt_mem_total,
+			used: data.sys_virt_mem_used,
+			datapoints: this.processDatapoints('memory', data.memory_status.gauge_pct)
+		})
+
+		this.dispatch('health.network', {
+			...data.network,
+			datapoints: this.processDatapoints('network', data.network.rx_bytes)
+		})
+
+		this.dispatch('health.p2p', {
+			...data.p2p_status,
+			datapoints: this.processDatapoints('p2p', data.p2p_status.gauge_pct)
+		})
+
+		this.dispatch('health.eth', {
+			...data.eth1_status,
 		})
 	}
 
-	processEthData(data){
-		let message = 'Fully Synced'
-		let status = metricStatus.SUCCESS
-		
-		if(data?.eth1_node_sync_status_percentage < 100){
-			message = `Sync in progress (${(100/(+data?.head_slot + +data?.sync_distance)*(+data?.head_slot)).toFixed(2)}%)`
-			status = metricStatus.PROCESSING
-		}
-
-		this.dispatch('eth.health', {
-			...data,
-			message: message,
-			status: status
-		})
-	}
-
-	processBeaconData(data){
-		let message = 'Fully Synced'
-		let status = metricStatus.SUCCESS
-		
-		if(+data?.sync_distance > 1){
-			message = `Sync in progress (${(100/(+data?.head_slot + +data?.sync_distance)*(+data?.head_slot)).toFixed(2)}%)`
-			status = metricStatus.PROCESSING
-		}
-
-		this.dispatch('beacon.health', {
-			...data,
-			total_slots: +data?.head_slot + +data?.sync_distance,
-			message: message,
-			status: status
-		})
+	processDatapoints(key, value){
+		const datapoints = this.datapoints[key].push(value)
+		this.datapoints[key].length > 10 && this.datapoints[key].shift()
+		return this.datapoints[key]
 	}
 }
 

@@ -5,12 +5,11 @@ import { Host } from '@archetypes'
 const CPU = props => {
 	const cpu = Host.useHealth('cpu')
 	return <Widget 
-		disabled={cpu?.status === 'CONCERN' && cpu.message}
 		title='CPU'
-		value={<LazyBoi value={cpu?.used}/>}
-		info={<LazyBoi value={cpu?.utilization}/>}
+		//value={<LazyBoi value={cpu?.used}/>}
+		info={<LazyBoi value={cpu.gauge_pct} suffix='% Utilization' tight/>}
 		extra={<Icon large/>}
-		background={<Sparkline data={cpu?.dataPoints}/>}
+		background={<Sparkline data={cpu.datapoints} width={312} height={100}/>}
 		{...props}
 	/>
 }
@@ -18,7 +17,8 @@ const CPU = props => {
 const Icon = props => {
 	const cpu = Host.useHealth('cpu')
 	return <Status.Dot 
-		status={cpu?.status?.toLowerCase()} 
+		status={cpu?.status}
+		lifted
 		{...props}
 	/>
 }
@@ -26,7 +26,7 @@ const Icon = props => {
 const Text = props => {
 	const cpu = Host.useHealth('cpu')
 	return <Status 
-		status={cpu?.status?.toLowerCase()} 
+		status={cpu?.status} 
 		title={cpu?.message} 
 		{...props}
 	/>

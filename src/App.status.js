@@ -14,7 +14,7 @@ const statusMappings = [
 		icon: <IconCheck/>
 	},
 	{
-		options: ['concern', 'warning', 'connecting', 'processing'],
+		options: ['concern', 'warning', 'warn', 'connecting', 'processing'],
 		color: 'var(--color-status-concern, orange)',
 		contrastColor: 'var(--color-status-dark, black)',
 		icon: <IconCheck/>

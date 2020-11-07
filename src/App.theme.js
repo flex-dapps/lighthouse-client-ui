@@ -4,6 +4,7 @@ import OpenSauceSans_Light from '@fonts/OpenSauceSans-Light.ttf'
 import OpenSauceSans_Regular from '@fonts/OpenSauceSans-Regular.ttf'
 import OpenSauceSans_Bold from '@fonts/OpenSauceSans-Bold.ttf'
 import Archivo_Bold from '@fonts/Archivo-Bold.ttf'
+import ArchivoBlack_Regular from '@fonts/ArchivoBlack-Regular.ttf'
 
 // fonts
 export const Fonts = createGlobalStyle`	
@@ -39,12 +40,21 @@ export const Fonts = createGlobalStyle`
 		src: url(${Archivo_Bold}) format('truetype');
 	}
 
+	@font-face {
+		font-family: 'Archivo';
+		font-style: black;
+		font-weight: 800;
+		font-display: auto;
+		src: url(${ArchivoBlack_Regular}) format('truetype');
+	}
+
 	body,
 	input,
 	select,
-	textarea{
+	textarea,
+	h1,h2,h3,h4{
 		font-family: 'OpenSauce', sans-serif;
-		font-weight: 400;
+		font-weight: 300;
 		line-height: 1.4em;
 		//letter-spacing: -0.045em;
 	}
@@ -230,11 +240,6 @@ export const Components = createGlobalStyle`
 		font-size: var(--font-size-normal)
 	}
 
-	.button{
-		.-button-wrapped-string-child{
-			margin-bottom: -0.1em;
-		}
-	}
 
 	@keyframes spin {
 	    from {transform:rotate(0deg);}
@@ -270,11 +275,18 @@ export const Components = createGlobalStyle`
 	}
 
 
-	// define all uses of 'Archivo' font
+	// define all uses of 'Archivo BOLD' font
 	.field > .-title-text,
 	.tabbed-nav-item{
 		font-family: 'Archivo', serif;
-		font-weight: 300;
+		font-weight: 700;
+		text-transform: uppercase
+	}
+
+	// define all uses of 'Archivo BLACK' font
+	.phat-phont{
+		font-family: 'Archivo', serif;
+		font-weight: 800;
 		text-transform: uppercase
 	}
 `

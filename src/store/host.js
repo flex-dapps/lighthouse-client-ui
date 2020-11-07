@@ -32,12 +32,12 @@ export const validationRules = {
 }
 
 const initialState = {
-	address: 'http://127.0.0.1',
-	port_bn: 5052,
-	port_vc: 5062,
-	token: null,
-	device: null,
-	name: null,
+	//address: 'http://127.0.0.1',
+	//port_bn: 5052,
+	//port_vc: 5062,
+	//token: null,
+	//device: null,
+	//name: null,
 	errors: {},
 	validated: false,
 	status: connectionStatus.DISCONNECTED,
@@ -80,6 +80,16 @@ const initialState = {
 			status: 'CONCERN',
 		}
 	},
+
+	health: {
+		eth: {},
+		beacon: {},
+		disk: {},
+		cpu: {},
+		memory: {},
+		network: {},
+		p2p: {},
+	}
 }
 
 const triggers = {
@@ -255,29 +265,27 @@ export default () => Store('hoststore', {
 	triggers: triggers,
 	setters: setters,
 	subscribers: subscribers,
-	init: ({set, state, trigger}) => {
+	init: ({set, update, state, trigger}) => {
 		set('lighthouse.bn.api', BeaconNode)
 		set('lighthouse.vc.api', ValidatorClient)
-
-		set('logStore', LogStore(), ()=>{
-			//trigger('connect')
-		})
+		
+		set('logStore', LogStore())
 
 		// configure beancon node api
 		const bn = state.lighthouse.bn.api
-		bn.on('eth.health', data => set('metrics.eth', data))
-		bn.on('beacon.health', data => set('metrics.beacon', data))
+		bn.on('health.eth', data => update('health.eth', data))
+		bn.on('health.beacon', data => update('health.beacon', data))
+		bn.on('health.disk', data => update('health.disk', data))
+		bn.on('health.cpu', data => update('health.cpu', data))
+		bn.on('health.memory', data => update('health.memory', data))
+		bn.on('health.network', data => update('health.network', data))
+		bn.on('health.p2p', data => update('health.p2p', data))
 		bn.on('status', status => set('lighthouse.bn.status', status))
 		bn.on('connected', spec => set('lighthouse.bn.spec', spec))
 		
 		
 		// configure validator client api
 		const vc = state.lighthouse.vc.api
-		vc.on('metrics.disk', data => set('metrics.disk', data))
-		vc.on('metrics.cpu', data => set('metrics.cpu', data))
-		vc.on('metrics.ram', data => set('metrics.ram', data))
-		vc.on('metrics.network', data => set('metrics.network', data))
-		vc.on('metrics.host', data => set('metrics.host', data))
 		vc.on('status', status => set('lighthouse.vc.status', status))
 	}
 })

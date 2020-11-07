@@ -1,7 +1,7 @@
 import Store from '@libs/store'
 import { v4 as uuidv4 } from 'uuid';
 import md5 from 'md5'
-import { downloadFile, numberToMaxDb } from '@util/helpers'
+import { downloadFile, copyToClipboard, printString, numberToMaxDb } from '@util/helpers'
 import { StakingPeriods } from '@app/App.config'
 import { Notification } from '@components'
 import { AppStore, HostStore } from '@store'
@@ -120,8 +120,24 @@ const triggers = {
 	},
 	
 	mnemonic: {
+		print: ({state}) => {
+			Notification.success('Seed phrase sent to printer')
+			setTimeout(() => printString(state?.mnemonic?.phrase), 200)
+		},
 		download: ({state}) => {
-			downloadFile('lighthouse_seed.txt', state?.mnemonic?.phrase)
+			const confirmed = window.confirm('Warning: Saving the file to a public or unencrypted partition can result in loss of funds! Confirm you wish to downlaod the seed phrase.')
+			if(confirmed){
+				Notification.success('Seed phrase file created')
+				downloadFile('lighthouse_seed.txt', state?.mnemonic?.phrase)
+			}
+		},
+		copy: ({state}) => {
+			const confirmed = window.confirm('Warning: Copying to clipboard can result in lost funds if the clipboard is accessed maliciously or accidentally by another program! Confirm you wish to copy the seed prhase.')
+			if(confirmed){
+				const notification = Notification.processing('Copying...')
+				setTimeout(() => notification.success({title: 'Seed phrase copied'}), 1000)
+				copyToClipboard(state?.mnemonic?.phrase)
+			}
 		}
 	}
 }

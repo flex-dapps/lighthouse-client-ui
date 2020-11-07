@@ -98,6 +98,9 @@ const storeController = (
 				}
 			}),
 			_state: {
+				// set a state key to a value
+				// check if there is a setter function associated with
+				// this action and use it if so, otherwise set the value
 				set: async (action, payload, callback) => {
 					const func = get(stores[name].setters, action)
 					let newState = null
@@ -109,6 +112,17 @@ const storeController = (
 					}
 
 					stores[name]._state._update(newState, action, payload, callback)
+				},
+				// used to merge some properties into an existing state object
+				// instead of completly overwriting the object, as with 'set'
+				update: async (key, payload={}, callback) => {
+					if(
+						typeof get(stores[name].state, key) === 'object' && 
+						typeof payload === 'object'
+					){
+						const newState = set(stores[name].state, key, Object.assign(get(stores[name].state, key), payload))
+						stores[name]._state._update(newState, key, payload, callback)
+					}
 				},
 				unset: (key, callback) => {
 					unset(stores[name].state, key)
@@ -178,7 +192,6 @@ const storeController = (
 						}
 					})
 				}
-
 			},
 			subscriptions: {
 				// subscriptions to when state is updated
@@ -284,6 +297,7 @@ const storeController = (
 					__hash: stores[name].stateHash,
 					state: stores[name].state,
 					set: stores[name]._state.set,
+					update: stores[name]._state.update,
 					unset: stores[name]._state.unset,
 					trigger: stores[name].trigger,
 					hydrate: stores[name].hydrate,
@@ -317,6 +331,7 @@ export default (name, config={}) => {
 	return {
 		state: state, 
 		set: (action, payload, cb) => store._state.set(action, payload, cb),
+		update: (action, payload, cb) => store._state.update(action, payload, cb),
 		unset: (key, cb) => store._state.unset(key, cb),
 		trigger: async (action, payload, cb) => await store.trigger(action, payload, cb),
 		subscribe: (key, cb) => store.subscriptions.subscribe(key, cb),

@@ -9,6 +9,7 @@ const Bullets = styled(
 		</NodeType>
 	})`
 	font-size: var(--font-size-medium);
+	font-weight: 300;
 	line-height: 1.6em;
 	padding: 0 1em;
 	position: relative;

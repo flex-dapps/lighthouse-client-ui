@@ -51,7 +51,7 @@ const Button = styled(
 	color: currentColor;
 	background: transparent;
 	font-size: var(--font-size-medium, 16px);
-	letter-spacing: 0.034em;
+	letter-spacing: 0;
 
 	${({compact}) => !!compact && `font-size: var(--font-size-normal, 14px);`}
 	${({large}) => !!large && `font-size: var(--font-size-large, 20px);`}
@@ -197,7 +197,7 @@ Button.Action = styled(
 			opacity: 1;
 		}
 
-		${({compact}) => !!compact && `font-size: var(--font-size-small)`}
+		${({compact}) => !!compact && `font-size: var(--font-size-xsmall)`}
 	`
 	
 Button.Icon = styled(

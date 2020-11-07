@@ -27,7 +27,7 @@ export default hot(
 		const history = useHistory();
 
 		useEffect(() => {
-			history.push('/connect')
+			//history.push('/connect')
 			trigger('init')
 		}, []) // eslint-disable-line
 

@@ -62,7 +62,7 @@ Status.Dot = styled(({className}) => <span className={`status-dot ${className}`}
 
 	${({lifted}) => !!lifted && `
 		border: 2px solid var(--color-light);
-		box-shadow: inset 0.2em 0.4em 0.4em rgba(0, 0, 0, 0.25), 0.2em 0.4em 0.4em rgba(0, 0, 0, 0.15);
+		box-shadow: inset 0.2rem 0.4rem 0.3rem rgba(0, 0, 0, 0.15), 0 0.3rem 0.45rem rgba(0, 0, 0, 0.15);
 		width: calc(1em + 4px);
 		height: calc(1em + 4px);
 	`}

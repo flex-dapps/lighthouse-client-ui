@@ -10,7 +10,7 @@ const Minimal = styled(
 		return <Widget.Minimal
 			title='Mnemonic'
 			subtitle={`Confirmed`}
-			info={<Button inline onClick={() => trigger('mnemonic.download')}>Download <IconArrowRight/></Button> }
+			info={<Button inline onClick={() => trigger('mnemonic.print')}>Print <IconArrowRight/></Button> }
 			{...props}
 			extra={<Status.Icon status='success'/>}
 		/>
