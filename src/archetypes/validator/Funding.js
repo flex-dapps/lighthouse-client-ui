@@ -124,6 +124,9 @@ export default ({className}) => {
 	const [ button, setButton ] = useState()
 
 	useEffect(() => {
+		
+		window.onbeforeunload = () => { return false };
+
 		// keep track of funding status
 		const sub = subscribe('validators', validators => {
 			const _funded = Object.values(validators||{}).filter(val => val.status === 'AWAITING_ACTIVATION').length
